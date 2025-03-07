@@ -2,8 +2,8 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import App from "./App";
 
-test("renders Hello World text", () => {
+test("renders title text", () => {
   render(<App />);
-  const textElement = screen.getByText(/Hello World/i);
+  const textElement = screen.getByText(/title/i);
   expect(textElement).toBeInTheDocument();
 });
