@@ -1,46 +1,80 @@
-# Getting Started with Create React App
+# Reonic EV Charging Station Simulator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React application that simulates and visualizes EV charging station usage patterns to help optimize charging infrastructure planning.
 
-## Available Scripts
+## Tech Stack
 
-In the project directory, you can run:
+- React 18
+- TypeScript 5.4
+- Tailwind CSS 3.4
+- Chart.js 4.4 for data visualization
+- Node.js 22.13.1
 
-### `npm start`
+## Requirements
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Node.js 22.x or higher
+- Yarn package manager (npm had issues related to peer-legacy between typescript and react-i18next)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Overview
 
-### `npm test`
+This simulator helps store owners plan their EV charging infrastructure by:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Calculating potential power demands
+- Visualizing charging patterns
+- Analyzing usage statistics
+- Optimizing charging station deployment
 
-### `npm run build`
+## Features
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Interactive input form for simulation parameters
+- Real-time visualization of charging data
+- Responsive design for all devices
+- Detailed analytics including:
+  - Power consumption per chargepoint
+  - Daily/weekly/monthly usage patterns
+  - Total energy consumption
+  - Peak load analysis
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Getting Started
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Clone the repository:
 
-### `npm run eject`
+```bash
+git clone https://github.com/absurdengineer/reonic-ev-simulator.git
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+2. Install dependencies using Yarn (do not use npm):
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+cd reonic-ev-simulator
+yarn install
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+3. Run the development server:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+yarn dev
+```
 
-## Learn More
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+> Important: This project exclusively uses Yarn for package management. Do not use npm as it may cause dependency conflicts.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Usage
+
+1. Set simulation parameters:
+
+   - Number of charging points (1-200)
+   - Arrival probability multiplier (20-200%)
+   - Car consumption (kWh)
+   - Charging power per point (kW)
+
+2. View the results in various visualizations:
+   - Real-time power usage charts
+   - Daily consumption patterns
+   - Statistical analysis
+
+## Contact
+
+Mohammad Dilshad Alam - mddalam1@gmail.com
+Project Link: [https://github.com/absurdengineer/reonic-ev-simulator](https://github.com/absurdengineer/reonic-ev-simulator)
