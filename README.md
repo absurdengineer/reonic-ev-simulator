@@ -4,9 +4,9 @@ A React application that simulates and visualizes EV charging station usage patt
 
 ## Tech Stack
 
-- React 18
-- TypeScript 5.4
-- Tailwind CSS 3.4
+- React 19
+- TypeScript 5.8
+- Tailwind CSS 3
 - Chart.js 4.4 for data visualization
 - Node.js 22.13.1
 
@@ -47,13 +47,13 @@ git clone https://github.com/absurdengineer/reonic-ev-simulator.git
 
 ```bash
 cd reonic-ev-simulator
-yarn install
+yarn
 ```
 
 3. Run the development server:
 
 ```bash
-yarn dev
+yarn start
 ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser
@@ -70,9 +70,17 @@ yarn dev
    - Charging power per point (kW)
 
 2. View the results in various visualizations:
-   - Real-time power usage charts
-   - Daily consumption patterns
-   - Statistical analysis
+
+   1. Overview Statistics
+
+      - Total Energy Consumption (kWh)
+      - Peak Load Analysis (kW)
+
+   2. Charts and Visualizations
+      - Power Consumption per Chargepoint (Bar Chart)
+      - Daily Usage Pattern (Line Chart)
+      - Charging Efficiency Distribution (Pie Chart)
+      - Performance Metrics (Radar Chart)
 
 ## Contact
 
