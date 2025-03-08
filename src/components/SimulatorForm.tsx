@@ -1,18 +1,23 @@
 import { t } from "i18next";
+import { FaChargingStation } from "react-icons/fa6";
 import InfoTooltip from "./InfoTooltip";
 import InputField from "./InputField";
 import Section from "./Section";
 
 export interface FormData {
-  chargingSpeed: string;
-  numChargers: string;
+  chargers: {
+    chargingSpeed: string;
+    numChargers: string;
+  }[];
   avgCarConsumption: string;
   multiplier: string;
 }
 
 export interface Errors {
-  chargingSpeed: string;
-  numChargers: string;
+  chargers: {
+    chargingSpeed: string;
+    numChargers: string;
+  }[];
   avgCarConsumption: string;
   multiplier: string;
 }
@@ -22,6 +27,7 @@ interface SimulatorFormProps {
   errors: Errors;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: (e: React.FormEvent) => void;
+  addNewCharger: () => void;
 }
 
 const SimulatorForm: React.FC<SimulatorFormProps> = ({
@@ -29,6 +35,7 @@ const SimulatorForm: React.FC<SimulatorFormProps> = ({
   errors,
   handleChange,
   handleSubmit,
+  addNewCharger,
 }) => {
   return (
     <form onSubmit={handleSubmit} className="max-w-3xl mx-auto px-4 sm:px-6">
@@ -36,24 +43,33 @@ const SimulatorForm: React.FC<SimulatorFormProps> = ({
         {t("simulation_parameters")}
       </h3>
       <Section title={t("charger_details")}>
-        <div className="flex flex-col sm:flex-row gap-4 my-2">
-          <InputField
-            id="chargingSpeed"
-            label={t("charging_speed")}
-            value={formData.chargingSpeed}
-            onChange={handleChange}
-            info={t("charging_speed_info")}
-            error={errors.chargingSpeed}
-          />
-          <InputField
-            id="numChargers"
-            label={t("num_chargers")}
-            value={formData.numChargers}
-            onChange={handleChange}
-            info={t("num_chargers_info")}
-            error={errors.numChargers}
-          />
-        </div>
+        {formData.chargers.map((charger) => (
+          <div className="flex flex-col sm:flex-row gap-4 my-2">
+            <InputField
+              id="chargingSpeed"
+              label={t("charging_speed")}
+              value={charger.chargingSpeed}
+              onChange={handleChange}
+              info={t("charging_speed_info")}
+              error={charger.chargingSpeed}
+            />
+            <InputField
+              id="numChargers"
+              label={t("num_chargers")}
+              value={charger.numChargers}
+              onChange={handleChange}
+              info={t("num_chargers_info")}
+              error={charger.numChargers}
+            />
+          </div>
+        ))}
+        <button
+          type="button"
+          className="px-3 py-2 bg-gray-200 text-gray-900 dark:text-white dark:bg-gray-700 border-neutral-300 rounded-md flex flex-row items-center gap-2"
+          onClick={addNewCharger}
+        >
+          <FaChargingStation /> Add New Charger
+        </button>
       </Section>
 
       <Section title={t("car_details")}>
