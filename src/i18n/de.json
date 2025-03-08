@@ -1,3 +1,18 @@
 {
-  "title": "Hallo Welt!"
+  "ev_simulator_title": "EV-Ladestation-Simulator",
+  "ev_simulator_description": "Dies ist eine einfache Anwendung, die EV-Ladestationen simuliert und visualisiert, um die Planung der Ladeinfrastruktur zu optimieren.",
+  "app_name": "Reonic",
+  "charger_details": "LADEGERÄT DETAILS",
+  "charging_speed": "Ladegeschwindigkeit (kW)",
+  "charging_speed_info": "Die Geschwindigkeit, mit der das Ladegerät das Auto laden kann.",
+  "num_chargers": "Anzahl der Ladegeräte",
+  "num_chargers_info": "Die Anzahl der verfügbaren Ladegeräte.",
+  "car_details": "FAHRZEUG DETAILS",
+  "avg_car_consumption": "Durchschn. Verbrauch (kW)",
+  "avg_car_consumption_info": "Der durchschnittliche Energieverbrauch des Autos.",
+  "multiplier": "Multiplikator",
+  "multiplier_info": "Der Multiplikator für den durchschnittlichen Autoverbrauch.",
+  "run_simulation": "Simulation starten",
+  "result": "Ergebnis",
+  "energy_consumption": "Energieverbrauch: {{value}} kWh"
 }

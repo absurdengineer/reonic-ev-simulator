@@ -1,3 +1,20 @@
 {
-  "title": "Hello, World!"
+  "app_name": "Reonic",
+  "ev_simulator_title": "EV Charger Simulator",
+  "ev_simulator_description": "This is a simple application that simulates and visualizes EV charging station usage patterns to help optimize charging infrastructure planning.",
+  "simulation_parameters": "Simulation Parameters",
+  "charger_details": "CHARGER DETAILS",
+  "charging_speed": "Charging Speed (kW)",
+  "charging_speed_info": "The speed at which the charger can charge the car.",
+  "num_chargers": "# of Chargers",
+  "num_chargers_info": "The number of chargers available.",
+  "car_details": "CAR DETAILS",
+  "avg_car_consumption": "Avg. Car Consumption (kW)",
+  "avg_car_consumption_info": "The average energy consumption of the car.",
+  "multiplier": "Multiplier",
+  "multiplier_info": "The multiplier for the average car consumption.",
+  "run_simulation": "Run Simulation",
+  "simulation_results": "Simulation Results",
+  "energy_consumption": "Energy Consumption: {{value}} kWh",
+  "reset_simulation": "Reset Simulation"
 }
