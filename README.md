@@ -13,7 +13,7 @@ A React application that simulates and visualizes EV charging station usage patt
 ## Requirements
 
 - Node.js 22.x or higher
-- Yarn package manager (npm had issues related to peer-legacy between typescript and react-i18next)
+- Yarn package manager v1.22.x (npm had issues related to peer-legacy between typescript and react-i18next)
 
 ## Overview
 
@@ -50,13 +50,19 @@ cd reonic-ev-simulator
 yarn
 ```
 
-3. Run the development server:
+3. Run the tests:
+
+```bash
+yarn test
+```
+
+4. Run the development server:
 
 ```bash
 yarn start
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 > Important: This project exclusively uses Yarn for package management. Do not use npm as it may cause dependency conflicts.
 
