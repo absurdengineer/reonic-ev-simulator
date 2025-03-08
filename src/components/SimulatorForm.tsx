@@ -16,6 +16,7 @@ export interface Errors {
   avgCarConsumption: string;
   multiplier: string;
 }
+
 interface SimulatorFormProps {
   formData: FormData;
   errors: Errors;
@@ -30,12 +31,12 @@ const SimulatorForm: React.FC<SimulatorFormProps> = ({
   handleSubmit,
 }) => {
   return (
-    <form onSubmit={handleSubmit}>
-      <h3 className="text-xl text-primary-500 dark:text-primary-300 font-semibold">
+    <form onSubmit={handleSubmit} className="max-w-3xl mx-auto px-4 sm:px-6">
+      <h3 className="text-lg sm:text-xl text-primary-500 dark:text-primary-300 font-semibold mb-4">
         {t("simulation_parameters")}
       </h3>
       <Section title={t("charger_details")}>
-        <div className="flex flex-row gap-4 my-2">
+        <div className="flex flex-col sm:flex-row gap-4 my-2">
           <InputField
             id="chargingSpeed"
             label={t("charging_speed")}
@@ -56,7 +57,7 @@ const SimulatorForm: React.FC<SimulatorFormProps> = ({
       </Section>
 
       <Section title={t("car_details")}>
-        <div className="flex flex-row gap-4">
+        <div className="flex flex-col sm:flex-row gap-4">
           <InputField
             id="avgCarConsumption"
             label={t("avg_car_consumption")}
@@ -84,7 +85,7 @@ const SimulatorForm: React.FC<SimulatorFormProps> = ({
                 value={formData.multiplier}
                 onChange={handleChange}
               />
-              <span className="cursor-not-allowed text-sm text-neutral-700 dark:text-white ring-1 ring-neutral-300 p-2 rounded-md">
+              <span className="min-w-[60px] text-center cursor-not-allowed text-sm text-neutral-700 dark:text-white ring-1 ring-neutral-300 p-2 rounded-md">
                 {formData.multiplier}%
               </span>
             </div>
@@ -97,10 +98,10 @@ const SimulatorForm: React.FC<SimulatorFormProps> = ({
         </div>
       </Section>
 
-      <div className="mt-4 flex flex-row justify-center">
+      <div className="mt-6 sm:mt-8 flex flex-row justify-center">
         <button
           type="submit"
-          className="bg-primary-500 hover:bg-primary-600 dark:bg-primary-600 dark:hover:bg-primary-700 text-white px-6 py-2 rounded-md transition duration-200"
+          className="w-full sm:w-auto bg-primary-500 hover:bg-primary-600 dark:bg-primary-600 dark:hover:bg-primary-700 text-white px-6 py-2 rounded-md transition duration-200"
         >
           {t("run_simulation")}
         </button>
