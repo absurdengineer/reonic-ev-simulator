@@ -35,8 +35,8 @@
   "daily_usage_pattern": "Daily Usage Pattern",
   "charging_efficiency_distribution": "Charging Efficiency Distribution",
   "performance_metrics": "Performance Metrics",
-  "kwh": "kWh",
-  "kw": "kW",
+  "total_energy_consumption_value": "{{value}} kW",
+  "peak_load_analysis_value": "{{value}} kWh",
   "add_new_charger": "Add New Charger",
   "remove": "Remove"
 }

@@ -109,31 +109,29 @@ const SimulationResult: React.FC<SimulationResultProps> = ({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         <OverviewCard
-          title={t("total_energy_consumption")}
-          result={
-            result.overviewData.totalEnergyConsumption.toFixed(2) +
-            " " +
-            t("kwh")
-          }
+          title={"total_energy_consumption"}
+          valueKey="total_energy_consumption_value"
+          value={result.overviewData.totalEnergyConsumption.toFixed(2)}
         />
         <OverviewCard
           title={t("peak_load_analysis")}
-          result={result.overviewData.peakLoad.toFixed(2) + " " + t("kw")}
+          valueKey="peak_load_analysis_value"
+          value={result.overviewData.peakLoad.toFixed(2)}
         />
 
-        <CardWrapper title={t("power_consumption_per_chargepoint")}>
+        <CardWrapper titleKey="power_consumption_per_chargepoint">
           <Bar data={result.powerConsumptionData} options={chartOptions} />
         </CardWrapper>
 
-        <CardWrapper title={t("daily_usage_pattern")}>
+        <CardWrapper titleKey="daily_usage_pattern">
           <Line data={result.usagePatternData} options={chartOptions} />
         </CardWrapper>
 
-        <CardWrapper title={t("charging_efficiency_distribution")}>
+        <CardWrapper titleKey="charging_efficiency_distribution">
           <Pie data={result.chargingEfficiencyData} options={chartOptions} />
         </CardWrapper>
 
-        <CardWrapper title={t("performance_metrics")}>
+        <CardWrapper titleKey="performance_metrics">
           <Radar data={result.performanceMetricsData} options={chartOptions} />
         </CardWrapper>
       </div>

@@ -117,7 +117,6 @@ const SimulatorContent = () => {
             totalChargingPower * 24 * (0.5 + Math.random() * 0.4),
           peakLoad: totalChargingPower * (0.8 + Math.random() * 0.3),
         },
-        // ...rest of the simulation result structure remains the same...
         powerConsumptionData: {
           labels: timeLabels,
           datasets: [
@@ -195,8 +194,6 @@ const SimulatorContent = () => {
     index?: number
   ) => {
     const { name: fieldName, value } = e.target;
-    console.log({ fieldName, value, index });
-    console.log({ chargers });
     if (index !== undefined) {
       const name = getChargerPropName(fieldName);
       if (name === "numChargers" && !/^\d*$/.test(value)) return;
