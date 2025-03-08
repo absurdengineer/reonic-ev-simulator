@@ -35,8 +35,8 @@
   "daily_usage_pattern": "Tägliches Nutzungsmuster",
   "charging_efficiency_distribution": "Verteilung der Ladeeffizienz",
   "performance_metrics": "Leistungskennzahlen",
-  "total_energy_consumption_value": "{{value}} kW",
-  "peak_load_analysis_value": "{{value}} kWh",
+  "total_energy_consumption_value": "{{value}} kWh",
+  "peak_load_analysis_value": "{{value}} kW",
   "add_new_charger": "Neues Ladegerät hinzufügen",
   "remove": "Entfernen"
 }
