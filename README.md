@@ -4,36 +4,35 @@ A React application that simulates and visualizes EV charging station usage patt
 
 ## Tech Stack
 
-- React 19
-- TypeScript 5.8
-- Tailwind CSS 3
-- Chart.js 4.4 for data visualization
-- Node.js 22.13.1
+- React 19 with TypeScript 5.8
+- Chart.js 4.4 with react-chartjs-2 5.3
+- Tailwind CSS 3 for styling
+- i18next 24.2 for internationalization (English and German)
+- React Testing Library with Jest for testing
 
 ## Requirements
 
 - Node.js 22.x or higher
-- Yarn package manager v1.22.x (npm had issues related to peer-legacy between typescript and react-i18next)
-
-## Overview
-
-This simulator helps store owners plan their EV charging infrastructure by:
-
-- Calculating potential power demands
-- Visualizing charging patterns
-- Analyzing usage statistics
-- Optimizing charging station deployment
+- Yarn package manager v1.22.x (npm is not recommended due to peer dependency issues)
 
 ## Features
 
-- Interactive input form for simulation parameters
-- Real-time visualization of charging data
-- Responsive design for all devices
-- Detailed analytics including:
-  - Power consumption per chargepoint
-  - Daily/weekly/monthly usage patterns
-  - Total energy consumption
-  - Peak load analysis
+- Interactive Simulation Parameters
+  - Multiple charging point configurations
+  - Adjustable charging speeds (5kW or higher)
+  - Customizable arrival probability multiplier (20-200%)
+  - Average car consumption settings
+- Real-time Data Visualization
+  - Power consumption per charging point (Bar Chart)
+  - Daily usage patterns (Line Chart)
+  - Charging efficiency distribution (Pie Chart)
+  - Performance metrics (Radar Chart)
+- Additional Features
+  - Dark/Light theme support
+  - Responsive design for all devices
+  - Internationalization (English and German)
+  - Real-time validation
+  - Accessibility support
 
 ## Getting Started
 
@@ -43,11 +42,11 @@ This simulator helps store owners plan their EV charging infrastructure by:
 git clone https://github.com/absurdengineer/reonic-ev-simulator.git
 ```
 
-2. Install dependencies using Yarn (do not use npm):
+2. Install dependencies using Yarn:
 
 ```bash
 cd reonic-ev-simulator
-yarn
+yarn install
 ```
 
 3. Run the tests:
@@ -64,29 +63,81 @@ yarn start
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-> Important: This project exclusively uses Yarn for package management. Do not use npm as it may cause dependency conflicts.
+## Development
 
-## Usage
+### Available Scripts
 
-1. Set simulation parameters:
+- `yarn start` - Starts development server
+- `yarn build` - Creates production build
+- `yarn test` - Runs test suite
+- `yarn eject` - Ejects CRA configuration
 
-   - Number of charging points (1-200)
-   - Arrival probability multiplier (20-200%)
-   - Car consumption (kWh)
-   - Charging power per point (kW)
+### Project Structure
 
-2. View the results in various visualizations:
+```
+src/
+├── components/    # React components
+├── hooks/        # Custom React hooks
+├── i18n/         # Internationalization files
+├── utils/        # Utility functions
+└── tests/        # Test files
+```
 
-   1. Overview Statistics
+### Testing
 
-      - Total Energy Consumption (kWh)
-      - Peak Load Analysis (kW)
+The project uses React Testing Library and Jest for testing. Run tests with:
 
-   2. Charts and Visualizations
-      - Power Consumption per Chargepoint (Bar Chart)
-      - Daily Usage Pattern (Line Chart)
-      - Charging Efficiency Distribution (Pie Chart)
-      - Performance Metrics (Radar Chart)
+```bash
+yarn test
+```
+
+## Screenshots
+
+### Light Theme
+
+![Light Theme - Form](./docs/screenshots/home_light.jpg)
+_Simulation Parameters Form - Light Theme_
+
+![Light Theme - Form with Errors](./docs/screenshots/home_light_errored.jpg)
+_Simulation Parameters Form with Errors - Light Theme_
+
+![Light Theme - Results](./docs/screenshots/result_light.jpg)
+_Simulation Results - Light Theme_
+
+### Dark Theme
+
+![Dark Theme - Form](./docs/screenshots/home_dark.jpg)
+_Simulation Parameters Form - Dark Theme_
+
+![Dark Theme - Form with Errors](./docs/screenshots/home_dark_errored.jpg)
+_Simulation Parameters Form with Errors - Dark Theme_
+
+![Dark Theme - Results](./docs/screenshots/result_dark.jpg)
+_Simulation Results - Dark Theme_
+
+### Mobile View
+
+#### Light
+
+![Mobile View - Form](./docs/screenshots/mob_home_light.png)
+_Mobile View - Simulation Form_
+
+![Mobile View - Form with Errors](./docs/screenshots/mob_home_light_errored.png)
+_Mobile View - Simulation Form with Errors_
+
+![Mobile View - Results](./docs/screenshots/mob_result_light.png)
+_Mobile View - Results_
+
+#### Dark
+
+![Mobile View - Form](./docs/screenshots/mob_home_dark.png)
+_Mobile View - Simulation Form_
+
+![Mobile View - Form with Errors](./docs/screenshots/mob_home_dark_errored.png)
+_Mobile View - Simulation Form with Errors_
+
+![Mobile View - Results](./docs/screenshots/mob_result_dark.png)
+_Mobile View - Results_
 
 ## Contact
 
