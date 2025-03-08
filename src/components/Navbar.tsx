@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { AiFillSun } from "react-icons/ai";
@@ -24,7 +25,7 @@ const Navbar = () => {
     <nav className="w-full bg-gradient-to-r from-white to-neutral-100 dark:from-neutral-800 dark:to-neutral-900 p-4 shadow-lg transition-colors duration-300">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <h1 className="text-3xl font-bold text-primary-600 dark:text-primary-300 transition-colors duration-300">
-          Reonic
+          {t("app_name")}
         </h1>
         <div className="flex items-center space-x-4">
           <button

@@ -21,40 +21,34 @@ const SimulatorContent = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const chargingSpeed = parseFloat(formData.chargingSpeed);
-    const numChargers = parseFloat(formData.numChargers);
-    const avgCarConsumption = parseFloat(formData.avgCarConsumption);
-    const multiplier = parseFloat(formData.multiplier);
+    const chargingSpeed = parseFloat(formData.chargingSpeed) || 0;
+    const numChargers = parseFloat(formData.numChargers) || 0;
+    const avgCarConsumption = parseFloat(formData.avgCarConsumption) || 0;
+    const multiplier = parseFloat(formData.multiplier) || 0;
+    let containsError = false;
 
-    if (chargingSpeed < 0) {
+    if (chargingSpeed < 5) {
       setErrors((prev) => ({
         ...prev,
-        chargingSpeed: "Charging speed must be a positive number",
+        chargingSpeed: "charging_speed_error",
       }));
-      return;
+      containsError = true;
     }
-    if (numChargers < 0) {
+    if (numChargers < 2) {
       setErrors((prev) => ({
         ...prev,
-        numChargers: "Number of chargers must be a positive number",
+        numChargers: "num_chargers_error",
       }));
-      return;
+      containsError = true;
     }
-    if (avgCarConsumption < 0) {
+    if (avgCarConsumption < 7) {
       setErrors((prev) => ({
         ...prev,
-        avgCarConsumption: "Average car consumption must be a positive number",
+        avgCarConsumption: "avg_car_consumption_error",
       }));
-      return;
+      containsError = true;
     }
-    if (multiplier < 60) {
-      setErrors((prev) => ({
-        ...prev,
-        multiplier: "Multiplier must be a positive number",
-      }));
-      return;
-    }
-
+    if (containsError) return;
     setResult(
       (chargingSpeed * numChargers * avgCarConsumption * multiplier) / 100
     );
@@ -65,14 +59,21 @@ const SimulatorContent = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    if (/^\d*\.?\d*$/.test(value)) {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
   };
 
   return (
-    <div className="">
+    <>
       {!result ? (
         <SimulatorForm
           formData={formData}
@@ -83,7 +84,7 @@ const SimulatorContent = () => {
       ) : (
         <SimulationResult result={result} resetResult={resetResult} />
       )}
-    </div>
+    </>
   );
 };
 
