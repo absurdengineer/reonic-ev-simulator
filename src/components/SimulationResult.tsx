@@ -77,12 +77,12 @@ export interface SimulationResultData {
 
 interface SimulationResultProps {
   result: SimulationResultData;
-  resetResult: () => void;
+  changeSimulationParameters: () => void;
 }
 
 const SimulationResult: React.FC<SimulationResultProps> = ({
   result,
-  resetResult,
+  changeSimulationParameters,
 }) => {
   const chartOptions = {
     responsive: true,
@@ -140,7 +140,7 @@ const SimulationResult: React.FC<SimulationResultProps> = ({
 
       <div className="flex flex-row justify-center pt-4">
         <button
-          onClick={resetResult}
+          onClick={changeSimulationParameters}
           className="flex gap-2 items-center w-full sm:w-auto bg-gray-500 hover:bg-gray-600 dark:bg-gray-600 dark:hover:bg-gray-700 text-white px-4 sm:px-6 py-2 rounded-md transition duration-200 text-sm sm:text-base"
         >
           <AiFillEdit /> {t("change_simulation_parameters")}

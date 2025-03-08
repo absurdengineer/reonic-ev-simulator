@@ -65,26 +65,39 @@ describe("SimulationResult Component", () => {
   };
 
   test("renders overview cards with correct values", () => {
-    render(<SimulationResult result={mockResult} resetResult={() => {}} />);
+    render(
+      <SimulationResult
+        result={mockResult}
+        changeSimulationParameters={() => {}}
+      />
+    );
 
     expect(screen.getByText(`1000.00 kWh`)).toBeInTheDocument();
     expect(screen.getByText(`50.00 kW`)).toBeInTheDocument();
   });
 
-  test("calls resetResult when reset button is clicked", async () => {
-    const mockResetResult = jest.fn();
+  test("calls changeSimulationParameters when reset button is clicked", async () => {
+    const changeSimulationParameters = jest.fn();
     render(
-      <SimulationResult result={mockResult} resetResult={mockResetResult} />
+      <SimulationResult
+        result={mockResult}
+        changeSimulationParameters={changeSimulationParameters}
+      />
     );
 
-    const resetButton = screen.getByText("Reset Simulation");
+    const resetButton = screen.getByText("Change Simulation Parameters");
     await userEvent.click(resetButton);
 
-    expect(mockResetResult).toHaveBeenCalledTimes(1);
+    expect(changeSimulationParameters).toHaveBeenCalledTimes(1);
   });
 
   test("renders all chart components", () => {
-    render(<SimulationResult result={mockResult} resetResult={() => {}} />);
+    render(
+      <SimulationResult
+        result={mockResult}
+        changeSimulationParameters={() => {}}
+      />
+    );
 
     expect(
       screen.getByText("Power Consumption per Chargepoint")

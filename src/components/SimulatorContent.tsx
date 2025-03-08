@@ -184,7 +184,7 @@ const SimulatorContent = () => {
     }, 1500);
   };
 
-  const resetResult = () => {
+  const changeSimulationParameters = () => {
     setResult(null);
   };
 
@@ -271,7 +271,10 @@ const SimulatorContent = () => {
           isFormInvalid={!isFormValid}
         />
       ) : (
-        <SimulationResult result={result!} resetResult={resetResult} />
+        <SimulationResult
+          result={result!}
+          changeSimulationParameters={changeSimulationParameters}
+        />
       )}
     </>
   );

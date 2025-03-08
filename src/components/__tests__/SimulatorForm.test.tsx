@@ -6,21 +6,35 @@ import SimulatorForm from "../SimulatorForm";
 describe("SimulatorForm Component", () => {
   const mockHandleSubmit = jest.fn((e) => e.preventDefault());
   const mockHandleChange = jest.fn();
+  const mockAddNewCharger = jest.fn();
+  const mockRemoveCharger = jest.fn();
+
   const defaultProps = {
-    formData: {
-      chargingSpeed: "11",
-      numChargers: "20",
+    carDetails: {
       avgCarConsumption: "18",
       multiplier: "120",
     },
-    errors: {
-      chargingSpeed: "",
-      numChargers: "",
+    carErrors: {
       avgCarConsumption: "",
       multiplier: "",
     },
+    chargers: [
+      {
+        chargingSpeed: "11",
+        numChargers: "20",
+      },
+    ],
+    chargerErrors: [
+      {
+        chargingSpeed: "",
+        numChargers: "",
+      },
+    ],
     handleChange: mockHandleChange,
     handleSubmit: mockHandleSubmit,
+    addNewCharger: mockAddNewCharger,
+    removeCharger: mockRemoveCharger,
+    isFormInvalid: false,
   };
 
   beforeEach(() => {
@@ -41,15 +55,17 @@ describe("SimulatorForm Component", () => {
   test("displays validation errors", () => {
     const propsWithErrors = {
       ...defaultProps,
-      errors: {
-        ...defaultProps.errors,
-        chargingSpeed: "charging_speed_error",
-      },
+      chargerErrors: [
+        {
+          chargingSpeed: "charging_speed_error",
+          numChargers: "",
+        },
+      ],
     };
 
     render(<SimulatorForm {...propsWithErrors} />);
     expect(
-      screen.getByText("We only support chargers of speeds of 5kW or more")
+      screen.getByText(/We only support chargers of speeds of 5kW or more/i)
     ).toBeInTheDocument();
   });
 
@@ -63,9 +79,17 @@ describe("SimulatorForm Component", () => {
 
   test("calls handleChange when input values change", async () => {
     render(<SimulatorForm {...defaultProps} />);
-    const chargingSpeedInput = screen.getByLabelText(/Charging Speed/i);
+    const chargingSpeedInput = screen.getByLabelText(/charging speed/i);
 
     await userEvent.type(chargingSpeedInput, "15");
-    expect(mockHandleChange).toHaveBeenCalled();
+    expect(mockHandleChange).toHaveBeenCalledWith(expect.any(Object), 0);
+  });
+
+  test("calls addNewCharger when add button is clicked", async () => {
+    render(<SimulatorForm {...defaultProps} />);
+    const addButton = screen.getByText(/Add New Charger/i);
+
+    await userEvent.click(addButton);
+    expect(mockAddNewCharger).toHaveBeenCalled();
   });
 });
