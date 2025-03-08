@@ -9,28 +9,27 @@ import {
 } from "../utils/simulationUtils";
 import LoadingAnimation from "./LoadingAnimation";
 import SimulationResult, { SimulationResultData } from "./SimulationResult";
-import SimulatorForm, { Errors, FormData } from "./SimulatorForm";
+import SimulatorForm, { Car, Charger } from "./SimulatorForm";
 
 const SimulatorContent = () => {
   const { t } = useTranslation();
-  const [formData, setFormData] = useState<FormData>({
-    chargers: [
-      {
-        chargingSpeed: "11",
-        numChargers: "20",
-      },
-    ],
+  const [carDetails, setCarDetails] = useState<Car>({
     avgCarConsumption: "18",
     multiplier: "120",
   });
-
-  const [errors, setErrors] = useState<Errors>({
-    chargers: [
-      {
-        chargingSpeed: "",
-        numChargers: "",
-      },
-    ],
+  const [chargers, setChargers] = useState<Charger[]>([
+    {
+      chargingSpeed: "11",
+      numChargers: "20",
+    },
+  ]);
+  const [chargerErrors, setChargerErrors] = useState<Charger[]>([
+    {
+      chargingSpeed: "",
+      numChargers: "",
+    },
+  ]);
+  const [carErrors, setCarErrors] = useState<Car>({
     avgCarConsumption: "",
     multiplier: "",
   });
@@ -67,33 +66,18 @@ const SimulatorContent = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const chargers = formData.chargers;
-    const avgCarConsumption = parseFloat(formData.avgCarConsumption) || 0;
+    const avgCarConsumption = parseFloat(carDetails.avgCarConsumption) || 0;
 
     let hasErrors = false;
-    const newErrors: Errors = {
-      chargers: chargers.map((charger) => ({
-        chargingSpeed: validateField(
-          "chargingSpeed",
-          parseFloat(charger.chargingSpeed) || 0
-        ).error,
-        numChargers: validateField(
-          "numChargers",
-          parseInt(charger.numChargers) || 0
-        ).error,
-      })),
+    const newErrors: Car = {
       avgCarConsumption: validateField("avgCarConsumption", avgCarConsumption)
         .error,
       multiplier: "",
     };
 
-    // Check if any validation failed
-    hasErrors =
-      newErrors.chargers.some(
-        (charger) => charger.chargingSpeed !== "" || charger.numChargers !== ""
-      ) || newErrors.avgCarConsumption !== "";
+    hasErrors = newErrors.avgCarConsumption !== "";
 
-    setErrors(newErrors);
+    setCarErrors(newErrors);
 
     if (hasErrors) {
       return;
@@ -190,45 +174,70 @@ const SimulatorContent = () => {
     setResult(null);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    if (name.startsWith("numChargers")) {
-      // Only allow integers for numChargers
-      if (/^\d*$/.test(value)) {
-        setFormData({
-          ...formData,
+  const getChargerPropName = (fieldName: string) => fieldName.split(":")[0];
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index?: number
+  ) => {
+    const { name: fieldName, value } = e.target;
+    console.log({ fieldName, value, index });
+    console.log({ chargers });
+    if (index !== undefined) {
+      const name = getChargerPropName(fieldName);
+      if (name === "numChargers" && !/^\d*$/.test(value)) return;
+      else if (!/^\d*\.?\d*$/.test(value)) return;
+      setChargers((prev) => {
+        const updated = [...prev];
+        updated[index] = {
+          ...prev[index],
           [name]: value,
-        });
-        const numValue = parseInt(value) || 0;
-        const validation = validateField(name, numValue);
-        if (validation.isValid) {
-          setErrors((prev) => ({ ...prev, [name]: "" }));
-        }
-      }
-    } else {
-      if (/^\d*\.?\d*$/.test(value)) {
-        setFormData({
-          ...formData,
-          [name]: value,
-        });
-        const numValue = parseFloat(value) || 0;
-        const validation = validateField(name, numValue);
-        if (validation.isValid) {
-          setErrors((prev) => ({ ...prev, [name]: "" }));
-        }
-      }
+        };
+        return updated;
+      });
+      const numValue = parseInt(value) || 0;
+      const validation = validateField(name, numValue);
+      const chargerErrorToBeUpdated = chargerErrors[index];
+      setChargerErrors((prev) => {
+        const updated = [...prev];
+        updated[index] = {
+          ...chargerErrorToBeUpdated,
+          [name]: validation.error,
+        };
+        return updated;
+      });
     }
+
+    if (!/^\d*\.?\d*$/.test(value)) return;
+    setCarDetails({
+      ...carDetails,
+      [fieldName]: value,
+    });
+    const numValue = parseFloat(value) || 0;
+    const validation = validateField(fieldName, numValue);
+    setCarErrors((prev) => ({ ...prev, [fieldName]: validation.error }));
   };
 
   const addNewCharger = () => {
-    const { chargers } = formData;
-    chargers.push({
-      chargingSpeed: "11",
-      numChargers: "20",
-    });
-    setFormData({
-      ...formData,
-    });
+    setChargers([
+      ...chargers,
+      {
+        chargingSpeed: "11",
+        numChargers: "20",
+      },
+    ]);
+    setChargerErrors([
+      ...chargerErrors,
+      {
+        chargingSpeed: "",
+        numChargers: "",
+      },
+    ]);
+  };
+
+  const removeCharger = (index: number) => {
+    setChargers((prev) => prev.filter((prev, idx) => idx !== index));
+    setChargerErrors((prev) => prev.filter((prev, idx) => idx !== index));
   };
 
   return (
@@ -237,11 +246,14 @@ const SimulatorContent = () => {
         <LoadingAnimation />
       ) : !result ? (
         <SimulatorForm
-          formData={formData}
-          errors={errors}
+          carDetails={carDetails}
+          carErrors={carErrors}
+          chargers={chargers}
+          chargerErrors={chargerErrors}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
           addNewCharger={addNewCharger}
+          removeCharger={removeCharger}
         />
       ) : (
         <SimulationResult result={result!} resetResult={resetResult} />
