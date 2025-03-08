@@ -34,6 +34,22 @@ A React application that simulates and visualizes EV charging station usage patt
   - Real-time validation
   - Accessibility support
 
+## Future Enhancements
+
+- Validation Improvements
+  - Charger speed conflict detection and warning messages
+  - Enhanced form validation with detailed error messages
+  - Toast notifications for user actions and errors
+  - Loading indicators for client-side calculations
+- UI/UX Improvements
+  - Enhanced charger configuration interface
+  - Animated transitions between states
+  - Drag-and-drop charging point arrangement
+- Additional Features
+  - Export simulation results to CSV/PDF
+  - Save and load simulation configurations
+  - Compare multiple simulation scenarios
+
 ## Getting Started
 
 1. Clone the repository:
