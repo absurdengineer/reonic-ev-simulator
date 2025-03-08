@@ -13,6 +13,7 @@ import {
 } from "chart.js";
 import { t } from "i18next";
 import { Bar, Line, Pie, Radar } from "react-chartjs-2";
+import { AiFillEdit } from "react-icons/ai";
 import CardWrapper from "./CardWrapper";
 import OverviewCard from "./OverviewCard";
 
@@ -140,9 +141,9 @@ const SimulationResult: React.FC<SimulationResultProps> = ({
       <div className="flex flex-row justify-center pt-4">
         <button
           onClick={resetResult}
-          className="w-full sm:w-auto bg-primary-500 hover:bg-primary-600 dark:bg-primary-600 dark:hover:bg-primary-700 text-white px-4 sm:px-6 py-2 rounded-md transition duration-200 text-sm sm:text-base"
+          className="flex gap-2 items-center w-full sm:w-auto bg-gray-500 hover:bg-gray-600 dark:bg-gray-600 dark:hover:bg-gray-700 text-white px-4 sm:px-6 py-2 rounded-md transition duration-200 text-sm sm:text-base"
         >
-          {t("reset_simulation")}
+          <AiFillEdit /> {t("change_simulation_parameters")}
         </button>
       </div>
     </div>

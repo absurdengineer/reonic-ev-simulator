@@ -18,7 +18,7 @@
   "num_chargers_error": "Die Mindestanzahl der zu installierenden Ladegeräte beträgt 2",
   "avg_car_consumption_error": "Der durchschnittliche Fahrzeugverbrauch darf nicht unter 7 kW liegen",
   "simulation_results": "Simulationsergebnisse",
-  "reset_simulation": "Simulation zurücksetzen",
+  "change_simulation_parameters": "Simulationsparameter ändern",
   "power_consumption_label": "Stromverbrauch (kW)",
   "charger_usage_label": "Ladegerätenutzung",
   "efficiency_high": "Hohe Effizienz",
@@ -36,5 +36,7 @@
   "charging_efficiency_distribution": "Verteilung der Ladeeffizienz",
   "performance_metrics": "Leistungskennzahlen",
   "kwh": "kWh",
-  "kw": "kW"
+  "kw": "kW",
+  "add_new_charger": "Neues Ladegerät hinzufügen",
+  "remove": "Entfernen"
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   generateChargingEfficiency,
@@ -36,6 +36,16 @@ const SimulatorContent = () => {
 
   const [result, setResult] = useState<SimulationResultData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(true);
+
+  useEffect(() => {
+    const hasErrors =
+      Object.values(carErrors).some((error) => error !== "") ||
+      chargerErrors.some(
+        (error) => error.chargingSpeed !== "" || error.numChargers !== ""
+      );
+    setIsFormValid(!hasErrors);
+  }, [carErrors, chargerErrors]);
 
   const validateField = (
     name: string,
@@ -66,20 +76,7 @@ const SimulatorContent = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const avgCarConsumption = parseFloat(carDetails.avgCarConsumption) || 0;
-
-    let hasErrors = false;
-    const newErrors: Car = {
-      avgCarConsumption: validateField("avgCarConsumption", avgCarConsumption)
-        .error,
-      multiplier: "",
-    };
-
-    hasErrors = newErrors.avgCarConsumption !== "";
-
-    setCarErrors(newErrors);
-
-    if (hasErrors) {
+    if (!isFormValid) {
       return;
     }
 
@@ -87,23 +84,40 @@ const SimulatorContent = () => {
 
     setTimeout(() => {
       const timeLabels = generateTimeLabels();
-      const chargingSpeed = parseFloat(chargers[0].chargingSpeed) || 0;
-      const numChargers = parseInt(chargers[0].numChargers) || 0;
+
+      // Calculate total values from all chargers
+      const totalChargingPower = chargers.reduce(
+        (sum, charger) =>
+          sum +
+          (parseFloat(charger.chargingSpeed) || 0) *
+            parseInt(charger.numChargers),
+        0
+      );
+
+      const totalNumChargers = chargers.reduce(
+        (sum, charger) => sum + parseInt(charger.numChargers),
+        0
+      );
+
+      const avgCarConsumption = parseFloat(carDetails.avgCarConsumption);
+
+      // Generate data using the first charger for base patterns
       const powerConsumptionData = generateHourlyPowerConsumption(
-        parseFloat(chargers[0].chargingSpeed) || 0,
-        parseInt(chargers[0].numChargers) || 0,
+        parseFloat(chargers[0].chargingSpeed),
+        totalNumChargers,
         avgCarConsumption
       );
-      const usagePatternData = generateUsagePattern(numChargers);
+      const usagePatternData = generateUsagePattern(totalNumChargers);
       const efficiencyData = generateChargingEfficiency();
       const performanceMetrics = generatePerformanceMetrics();
 
       const simulationResult: SimulationResultData = {
         overviewData: {
           totalEnergyConsumption:
-            chargingSpeed * numChargers * 24 * (0.5 + Math.random() * 0.4),
-          peakLoad: chargingSpeed * numChargers * (0.8 + Math.random() * 0.3),
+            totalChargingPower * 24 * (0.5 + Math.random() * 0.4),
+          peakLoad: totalChargingPower * (0.8 + Math.random() * 0.3),
         },
+        // ...rest of the simulation result structure remains the same...
         powerConsumptionData: {
           labels: timeLabels,
           datasets: [
@@ -195,7 +209,7 @@ const SimulatorContent = () => {
         };
         return updated;
       });
-      const numValue = parseInt(value) || 0;
+      const numValue = parseInt(value);
       const validation = validateField(name, numValue);
       const chargerErrorToBeUpdated = chargerErrors[index];
       setChargerErrors((prev) => {
@@ -254,6 +268,7 @@ const SimulatorContent = () => {
           handleSubmit={handleSubmit}
           addNewCharger={addNewCharger}
           removeCharger={removeCharger}
+          isFormInvalid={!isFormValid}
         />
       ) : (
         <SimulationResult result={result!} resetResult={resetResult} />

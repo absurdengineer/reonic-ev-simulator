@@ -18,7 +18,7 @@
   "num_chargers_error": "Minimum number of chargers to be installed is 2",
   "avg_car_consumption_error": "Average car consumption cant be lower than 7kW",
   "simulation_results": "Simulation Results",
-  "reset_simulation": "Reset Simulation",
+  "change_simulation_parameters": "Change Simulation Parameters",
   "power_consumption_label": "Power Consumption (kW)",
   "charger_usage_label": "Charger Usage",
   "efficiency_high": "High Efficiency",
@@ -36,5 +36,7 @@
   "charging_efficiency_distribution": "Charging Efficiency Distribution",
   "performance_metrics": "Performance Metrics",
   "kwh": "kWh",
-  "kw": "kW"
+  "kw": "kW",
+  "add_new_charger": "Add New Charger",
+  "remove": "Remove"
 }

@@ -1,5 +1,9 @@
 import { t } from "i18next";
-import { FaChargingStation } from "react-icons/fa6";
+import {
+  FaChargingStation,
+  FaHourglassStart,
+  FaTrashCan,
+} from "react-icons/fa6";
 import InfoTooltip from "./InfoTooltip";
 import InputField from "./InputField";
 import Section from "./Section";
@@ -26,6 +30,7 @@ interface SimulatorFormProps {
   handleSubmit: (e: React.FormEvent) => void;
   addNewCharger: () => void;
   removeCharger: (index: number) => void;
+  isFormInvalid: boolean;
 }
 
 const SimulatorForm: React.FC<SimulatorFormProps> = ({
@@ -37,6 +42,7 @@ const SimulatorForm: React.FC<SimulatorFormProps> = ({
   handleSubmit,
   addNewCharger,
   removeCharger,
+  isFormInvalid,
 }) => {
   return (
     <form onSubmit={handleSubmit} className="px-4 sm:px-6">
@@ -68,10 +74,10 @@ const SimulatorForm: React.FC<SimulatorFormProps> = ({
             <button
               type="button"
               disabled={chargers.length < 2}
-              className="disabled:cursor-not-allowed disabled:bg-red-300 px-3 py-2  bg-red-500 text-white border-neutral-300 rounded-md self-baseline md:mt-7"
+              className="flex gap-2 items-center disabled:cursor-not-allowed disabled:bg-red-300 px-3 py-2  bg-red-500 text-white border-neutral-300 rounded-md self-baseline md:mt-7"
               onClick={() => removeCharger(index)}
             >
-              Remove
+              <FaTrashCan /> {t("remove")}
             </button>
           </div>
         ))}
@@ -80,7 +86,7 @@ const SimulatorForm: React.FC<SimulatorFormProps> = ({
           className="px-3 py-2 bg-gray-200 text-primary-700 dark:text-white dark:bg-gray-700 border-neutral-300 rounded-md flex flex-row items-center gap-2"
           onClick={addNewCharger}
         >
-          <FaChargingStation /> Add New Charger
+          <FaChargingStation /> {t("add_new_charger")}
         </button>
       </Section>
 
@@ -129,9 +135,10 @@ const SimulatorForm: React.FC<SimulatorFormProps> = ({
       <div className="mt-6 sm:mt-8 flex flex-row justify-center">
         <button
           type="submit"
-          className="w-full sm:w-auto bg-primary-500 hover:bg-primary-600 dark:bg-primary-600 dark:hover:bg-primary-700 text-white px-6 py-2 rounded-md transition duration-200"
+          disabled={isFormInvalid}
+          className="flex items-center gap-2 w-full sm:w-auto disabled:cursor-not-allowed disabled:bg-primary-400 disabled:dark:bg-primary-900 bg-primary-500 hover:bg-primary-600 dark:bg-primary-600 dark:hover:bg-primary-700 text-white px-6 py-2 rounded-md transition duration-200"
         >
-          {t("run_simulation")}
+          <FaHourglassStart /> {t("run_simulation")}
         </button>
       </div>
     </form>
