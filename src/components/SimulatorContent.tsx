@@ -30,42 +30,61 @@ const SimulatorContent = () => {
   const [result, setResult] = useState<SimulationResultData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const validateField = (
+    name: string,
+    value: number
+  ): { isValid: boolean; error: string } => {
+    switch (name) {
+      case "chargingSpeed":
+        return {
+          isValid: value >= 5,
+          error: value >= 5 ? "" : "charging_speed_error",
+        };
+      case "numChargers":
+        return {
+          isValid: value >= 2 && Number.isInteger(value),
+          error:
+            value >= 2 && Number.isInteger(value) ? "" : "num_chargers_error",
+        };
+      case "avgCarConsumption":
+        return {
+          isValid: value >= 7,
+          error: value >= 7 ? "" : "avg_car_consumption_error",
+        };
+      default:
+        return { isValid: true, error: "" };
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const chargingSpeed = parseFloat(formData.chargingSpeed) || 0;
+    const numChargers = parseInt(formData.numChargers) || 0;
+    const avgCarConsumption = parseFloat(formData.avgCarConsumption) || 0;
+
+    const validations = {
+      chargingSpeed: validateField("chargingSpeed", chargingSpeed),
+      numChargers: validateField("numChargers", numChargers),
+      avgCarConsumption: validateField("avgCarConsumption", avgCarConsumption),
+    };
+
+    const newErrors = {
+      chargingSpeed: validations.chargingSpeed.error,
+      numChargers: validations.numChargers.error,
+      avgCarConsumption: validations.avgCarConsumption.error,
+      multiplier: "",
+    };
+
+    setErrors(newErrors);
+
+    if (Object.values(validations).some((v) => !v.isValid)) {
+      return;
+    }
+
     setIsLoading(true);
 
     setTimeout(() => {
-      const chargingSpeed = parseFloat(formData.chargingSpeed) || 0;
-      const numChargers = parseFloat(formData.numChargers) || 0;
-      const avgCarConsumption = parseFloat(formData.avgCarConsumption) || 0;
-      let containsError = false;
-
-      if (chargingSpeed < 5) {
-        setErrors((prev) => ({
-          ...prev,
-          chargingSpeed: "charging_speed_error",
-        }));
-        containsError = true;
-      }
-      if (numChargers < 2) {
-        setErrors((prev) => ({
-          ...prev,
-          numChargers: "num_chargers_error",
-        }));
-        containsError = true;
-      }
-      if (avgCarConsumption < 7) {
-        setErrors((prev) => ({
-          ...prev,
-          avgCarConsumption: "avg_car_consumption_error",
-        }));
-        containsError = true;
-      }
-      if (containsError) {
-        setIsLoading(false);
-        return;
-      }
-
       const timeLabels = generateTimeLabels();
       const powerConsumptionData = generateHourlyPowerConsumption(
         chargingSpeed,
@@ -154,15 +173,31 @@ const SimulatorContent = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (/^\d*\.?\d*$/.test(value)) {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-      setErrors((prev) => ({
-        ...prev,
-        [name]: "",
-      }));
+    if (name === "numChargers") {
+      // Only allow integers for numChargers
+      if (/^\d*$/.test(value)) {
+        setFormData({
+          ...formData,
+          [name]: value,
+        });
+        const numValue = parseInt(value) || 0;
+        const validation = validateField(name, numValue);
+        if (validation.isValid) {
+          setErrors((prev) => ({ ...prev, [name]: "" }));
+        }
+      }
+    } else {
+      if (/^\d*\.?\d*$/.test(value)) {
+        setFormData({
+          ...formData,
+          [name]: value,
+        });
+        const numValue = parseFloat(value) || 0;
+        const validation = validateField(name, numValue);
+        if (validation.isValid) {
+          setErrors((prev) => ({ ...prev, [name]: "" }));
+        }
+      }
     }
   };
 
